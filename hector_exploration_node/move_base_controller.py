@@ -50,16 +50,19 @@ class ExplorationController:
         self._move_base = SimpleActionClient('move_base', MoveBaseAction)
 
     def run(self):
-        r = rospy.Rate(1 / 15.0)
+        r = rospy.Rate(1 / 7.0)
         while not rospy.is_shutdown():
             self.run_once()
             r.sleep()
 
     def run_once(self):
         path = self._plan_service().trajectory
-        pose = path.poses[-1]
-        print 'Moving to frontier...'
-        self.move_to_pose(pose)
+        poses = path.poses
+        if not path.poses:
+            rospy.loginfo('No frontiers left.')
+            return
+        rospy.loginfo('Moving to frontier...')
+        self.move_to_pose(poses[-1])
 
     def move_to_pose(self, pose_stamped, timeout=20.0):
         goal = MoveBaseGoal()
