@@ -10,7 +10,7 @@
   <url>http://ros.org/wiki/hector_exploration_node</url>
   <depend package="hector_exploration_planner"/>
   <depend package="hector_nav_msgs"/>
+  <depend package="move_base_msgs"/>
+  <depend package="rospy"/>
 
 </package>
-
-
